@@ -3,31 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package juegotimbiriche;
+package Dominio;
 
 /**
  *
  * @author Equipo 5
  */
-public class Tablero extends Juego{
-    
+public class Tablero extends Juego {
+
     /**
      * Atributos de la clase Tablero.
      */
     private String dimension;
-    private static Figura[][] figuras;
+    private Figura[][] figuras;
 
     /**
      * Constructor por default de la clase Tablero.
      */
     public Tablero() {
     }
-    
-    public Tablero(String dimension){
+
+    /**
+     *
+     * @param dimension
+     */
+    public Tablero(String dimension) {
         this.dimension = dimension;
-        figuras= new Figura[19][19];
+        figuras = new Figura[19][19];
     }
 
+    /**
+     *
+     * @param dimension
+     * @param figuras
+     */
     public Tablero(String dimension, Figura[][] figuras) {
         this.dimension = dimension;
         this.figuras = figuras;
@@ -35,27 +44,48 @@ public class Tablero extends Juego{
 
     /**
      * Gets y sets de la clase Tablero.
-     * @return 
+     *
+     * @return
      */
     public String getDimension() {
         return dimension;
     }
 
+    /**
+     *
+     * @param dimension
+     */
     public void setDimension(String dimension) {
         this.dimension = dimension;
     }
 
-    public static Figura[][] getFiguras() {
+    /**
+     *
+     * @return
+     */
+    public Figura[][] getFiguras() {
         return figuras;
     }
 
+    /**
+     *
+     * @param figuras
+     */
     public void setFiguras(Figura[][] figuras) {
         this.figuras = figuras;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
-        return "Tablero{" + "dimension=" + dimension + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tablero{dimension=").append(dimension);
+        sb.append(", figuras=").append(figuras);
+        sb.append('}');
+        return sb.toString();
     }
-    
+
 }

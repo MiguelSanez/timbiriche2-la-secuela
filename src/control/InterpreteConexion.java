@@ -5,9 +5,9 @@
  */
 package control;
 
-import juegotimbiriche.Figura;
-import juegotimbiriche.Jugador;
-import presentacion.SalaDeEspera;
+import Dominio.Figura;
+import Dominio.Jugador;
+import presentacion.FrmSalaEspera;
 
 /**
  *
@@ -15,34 +15,34 @@ import presentacion.SalaDeEspera;
  */
 public class InterpreteConexion {
 
-    private static Control control;
-    private static InterpreteConexion singleton;
-    private static SalaDeEspera sala;
+    private Control control;
+    private static InterpreteConexion instance;
+
+    /**
+     *
+     * @return
+     */
+    public static InterpreteConexion getInstance() {
+        if (instance == null) {
+            instance = new InterpreteConexion();
+        }
+        return instance;
+    }
 
     private InterpreteConexion() {
 
     }
 
-    public static InterpreteConexion getInterprete() {
-        if (singleton == null) {
-            singleton = new InterpreteConexion();
-        }
-        return singleton;
-    }
-
-    public static void setControl(Control control) {
-        InterpreteConexion.control = control;
-    }
-
-    public static void setSala(SalaDeEspera sala) {
-        InterpreteConexion.sala = sala;
-    }
-
-    public static void interpretar(int accion, Object objeto) {
+    /**
+     *
+     * @param accion
+     * @param objeto
+     */
+    public void interpretar(int accion, Object objeto) {
 //        String mando = mensaje.split("@")[0];
 //        if (mando.equalsIgnoreCase("JugadorConexion")) {
 //            Jugador jugador = new Jugador(mensaje.split("@")[1]);
-//            InterpreteConexion.control.conectaJugador(jugador);
+//            getJugador().conectaJugador(jugador);
 //        } else if (mando.equalsIgnoreCase("Jugada")) {
 //            String jugada = mensaje.split("@")[1].trim();
 //            Figura figura = Figura.toFigura(jugada.split(" ")[0]);
@@ -50,21 +50,41 @@ public class InterpreteConexion {
 //        } else if(mensaje.startsWith("Inicia")){
 //            sala.inicia();
 //        }
-        if(objeto instanceof Jugador){
-            switch(accion){
-                case 0: 
+        if (objeto instanceof Jugador) {
+            switch (accion) {
+                case 0:
                     control.conectaJugador((Jugador) objeto);
                     break;
                 case 1:
-                    
+
                     break;
                 case 2:
                     break;
             }
-            control.conectaJugador((Jugador)objeto);
-        } else if (objeto instanceof Figura){
-            
+            control.conectaJugador((Jugador) objeto);
+        } else if (objeto instanceof Figura) {
+
+        } else if (objeto instanceof String) {
+            if (((String) objeto).startsWith("Inicia")) {
+                FrmSalaEspera.getInstance().inicia();
+            }
         }
+    }
+
+    /**
+     *
+     * @param control
+     */
+    public void setControl(Control control) {
+        this.control = control;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Control getControl() {
+        return control;
     }
 
 }

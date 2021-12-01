@@ -1,5 +1,4 @@
-
-package juegotimbiriche;
+package Dominio;
 
 import java.util.Objects;
 import javax.swing.JLabel;
@@ -8,35 +7,31 @@ import javax.swing.JLabel;
  *
  * @author Equipo 5
  */
-public class Figura extends JLabel{
-    
+public class Figura extends JLabel {
+
     /**
      * Atributos de la clase Figura.
      */
     private Jugador jugador;
-    private boolean uso=false;
+    private boolean uso = false;
     private TipoFigura tipo;
-    private int hash;
 
     /**
      * Constructor por defecto de la clase Cuadro.
      */
-    public Figura(){
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.jugador);
-        hash = 67 * hash + Objects.hashCode(this.tipo);
-        this.hash=hash;
+    public Figura() {
     }
 
-    public Figura(Jugador jugador, boolean uso, TipoFigura tipo,int hash) {
+    public Figura(Jugador jugador, boolean uso, TipoFigura tipo) {
         this.jugador = jugador;
-        this.uso= uso;
-        this.tipo= tipo;
-        this.hash=hash;
+        this.uso = uso;
+        this.tipo = tipo;
     }
 
     /**
      * Gets y sets de la clase Figura.
+     *
+     * @return
      */
     public Jugador getJugador() {
         return jugador;
@@ -61,19 +56,14 @@ public class Figura extends JLabel{
     public void setTipo(TipoFigura tipo) {
         this.tipo = tipo;
     }
-    public void setHash(int hash){
-        this.hash=hash;
-    }
-    @Override
-    public int hashCode() {
-        return hash;
-    }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
-        if (hash==obj.hashCode()) {
-            return true;
-        }
         if (this == obj) {
             return true;
         }
@@ -84,6 +74,9 @@ public class Figura extends JLabel{
             return false;
         }
         final Figura other = (Figura) obj;
+        if (this.uso != other.uso) {
+            return false;
+        }
         if (!Objects.equals(this.jugador, other.jugador)) {
             return false;
         }
@@ -94,13 +87,21 @@ public class Figura extends JLabel{
     }
 
     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.jugador);
+        hash = 83 * hash + (this.uso ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.tipo);
+        return hash;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
     public String toString() {
-        return  jugador + ":" + uso +":"+this.tipo+":"+this.hashCode();
+        return jugador + ":" + uso + ":" + this.tipo + ":" + this.hashCode();
     }
-    public static Figura toFigura(String datos){
-        Figura figura=new Figura(new Jugador(datos.split(":")[0]),Boolean.getBoolean(datos.split(":")[1]),TipoFigura.valueOf(datos.split(":")[2]),Integer.parseInt(datos.split(":")[3]));
-        
-        return figura;
-    }
-    
+
 }
